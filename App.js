@@ -4,6 +4,11 @@ import rough from 'roughjs/bundled/rough.esm';
 const generator = rough.generator();
 
 const App = () => {
+    const [elements, setElemnts] = useState(initialState: []);
+
+
+
+
 
     useLayoutEffect(effect, () => {
         const canvas = document.getElementById("canvas");
