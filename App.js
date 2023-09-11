@@ -9,7 +9,7 @@ function createElement(x1, y1, x2, y2) {
 }
 
 const App = () => {
-    const [elements, setElemnts] = useState(initialState, []);
+    const [elements, setElements] = useState(initialState, []);
     const [drawing, setDrawing] = useState( initialState, false);
 
 
@@ -34,7 +34,7 @@ const App = () => {
         const { clientX, clientY } = event; 
 
         const element = createElement(clientX, clientY, clientX, clientY);
-        setElemnts( value, prevState => [...prevState, element]);
+        setElements( value, prevState => [...prevState, element]);
     };
 
     const handleMouseMove = (event) => {
@@ -42,8 +42,13 @@ const App = () => {
 
         const {clientX, clientY} = event;
         const index = elements.length - 1;
+        const {x1, y1} = elements[index];
         const element = createElement(x1, y1, clientX, clientY);
-        console.log(clientX, clientY);
+    
+        const elementsCopy = [...elements];
+        elementsCopy[index] = updatedElement;
+        setElements
+
     };
 
     const handleMouseUp = () => {
