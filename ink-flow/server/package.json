@@ -1,0 +1,14 @@
+{
+    "name": "ink-flow",
+    "version": "1.0.0",
+    "dependencies": {
+        "apollo-server-express": "^3.12.1",
+        "express": "^4.18.2",
+        "mongoose": "^7.5.1"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "seed": "node seeds/seed.js",
+        "watch": "nodemon server.js"
+    }
+}
