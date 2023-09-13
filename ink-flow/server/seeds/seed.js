@@ -11,7 +11,7 @@ db.once('open', async () => {
         await User.create(userSeeds);
 
         for (let i = 0; i < canvasSeeds.length; i++) {
-            const { _id, canvasAuthor } = await Thought.create(canvasSeeds[i]);
+            const { _id, canvasAuthor } = await Canvas.create(canvasSeeds[i]);
             const user = await User.findOneAndUpdate(
             { username: canvasAuthor },
             {

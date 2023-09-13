@@ -4,8 +4,13 @@ const typeDefs = `
         username: String
         email: String
         password: String
-        thoughts: [Thought]!
+    }
+    type Query {
+        users: [User!]!
+        user(username: String!): User
+        canvases(username: String): [Canvas!]!
+        canvas(canvasId: ID!): Canvas
     }
     `;
-
+   // canvases: [Canvas]!
     module.exports = typeDefs;
