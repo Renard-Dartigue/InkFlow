@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import './home.css'
+import './Home.css'
 
-const home = () => {
+const Home = () => {
 
-const [action,setAction] = useState ("home");
+const [action,setAction] = useState ("Home");
 
     return (
         <section>
@@ -29,4 +29,4 @@ const [action,setAction] = useState ("home");
     )
 }
 
-export default home
+export default Home
