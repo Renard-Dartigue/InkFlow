@@ -1,6 +1,7 @@
 const { User, Canvas } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-errors');
+const Drawing = require('./models/Drawing');
 
 const resolvers = {
     Query: {
@@ -17,6 +18,12 @@ const resolvers = {
         canvas: async (parent, { canvasId }) => {
             return Canvas.findOne({ _id: canvasId });
         },
+        drawings: async (parent, args, context) => {
+            const userId = args.userId; 
+            const drawings = await Drawing.find({ userId });
+            return drawings;
+        },
+
     },
     
     Mutation: {
@@ -37,6 +44,12 @@ const resolvers = {
             const token = signToken(user);
 
         return { token, user };
+        },
+        saveDrawing: async (parent, args, context) => {
+            const { userId, imageUrl } = args.input;
+            const drawing = new Drawing({ userId, imageUrl });
+            const savedDrawing = await drawing.save();
+            return savedDrawing;
         },
     },
 };
