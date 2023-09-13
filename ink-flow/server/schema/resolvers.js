@@ -1,6 +1,7 @@
 const { User, Canvas } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
-
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-errors');
+const Drawing = require('./models/Drawing');
 
 const resolvers = {
     Query: {
@@ -17,6 +18,12 @@ const resolvers = {
         canvas: async (parent, { canvasId }) => {
             return Canvas.findOne({ _id: canvasId });
         },
+        drawings: async (parent, args, context) => {
+            const userId = args.userId; 
+            const drawings = await Drawing.find({ userId });
+            return drawings;
+        },
+
     },
     
     Mutation: {
@@ -28,15 +35,21 @@ const resolvers = {
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
-                throw AuthenticationError
+                throw new AuthenticationError('User not found');
             }
             const correctPw = await user.isCorrectPassword(password);
             if (!correctPw) {
-                throw AuthenticationError
+                throw new AuthenticationError('Incorrect password');
             }
             const token = signToken(user);
 
         return { token, user };
+        },
+        saveDrawing: async (parent, args, context) => {
+            const { userId, imageUrl } = args.input;
+            const drawing = new Drawing({ userId, imageUrl });
+            const savedDrawing = await drawing.save();
+            return savedDrawing;
         },
     },
 };

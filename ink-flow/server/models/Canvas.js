@@ -1,10 +1,16 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
+const canvasObjectSchema = new Schema({
+    width: Number,
+    height: Number,
+});
+
 const canvasSchema = new Schema({
     canvasAuthor: {
-        type: String,
-        require: true,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
         trim: true,
     },
     createdAt: {
@@ -13,7 +19,8 @@ const canvasSchema = new Schema({
         get: (timestamp) => dateFormat(timestamp),
     },
     canvasObj: {
-        type: Object,
+        type: canvasObjectSchema,
+        required: true,
     },
 });
 
