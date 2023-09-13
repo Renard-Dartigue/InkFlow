@@ -1,6 +1,6 @@
 const { User, Canvas } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
-
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-errors');
 
 const resolvers = {
     Query: {
@@ -28,11 +28,11 @@ const resolvers = {
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
-                throw AuthenticationError
+                throw new AuthenticationError('User not found');
             }
             const correctPw = await user.isCorrectPassword(password);
             if (!correctPw) {
-                throw AuthenticationError
+                throw new AuthenticationError('Incorrect password');
             }
             const token = signToken(user);
 
