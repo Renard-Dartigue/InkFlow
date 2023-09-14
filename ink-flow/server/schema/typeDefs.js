@@ -5,6 +5,11 @@ const typeDefs = `
         email: String
         password: String
     }
+    type Canvas {
+        canvasAuthor: String
+        createdAt: String
+        canvasObj: String
+    }
     type Query {
         users: [User!]!
         user(username: String!): User
