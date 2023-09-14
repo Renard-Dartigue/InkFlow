@@ -1,15 +1,30 @@
 // import logo from './logo.svg';
 import './App.css';
-import Login from './pages/Login';
+import { Outlet } from 'react-router-dom';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div>
-      <Login/>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="flex-column justify-center align-center min-100-vh bg-primary">
+        <Outlet />
+      </div>
+    </ApolloProvider>
   );
 }
+
+// function App() {
+//   return (
+//     <div>
+//       <Login/>
+//     </div>
+//   );
+// }
 
 export default App;
 
