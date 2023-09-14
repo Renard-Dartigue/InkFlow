@@ -1,7 +1,7 @@
 const { User, Canvas } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-errors');
-const Drawing = require('./models/Drawing');
+const Drawing = require('../models/Drawing');
 
 const resolvers = {
     Query: {
