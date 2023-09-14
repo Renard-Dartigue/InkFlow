@@ -1,9 +1,38 @@
-import React, { useState } from "react"
-import './Login.css'
+import React, { useState } from "react";
+import { LOGIN_USER } from './utils/mutations';
+import { useMutation } from '@apollo/client';
+import './Login.css';
+import Auth from './utils/auth'
 
-const Login = () => {
-
+const Login = (props) => {
+const [Login, {error, data}] = useMutation(LOGIN_USER);
 const [action,setAction] = useState("Login");
+const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+        ...formState, [name]: value,
+    });
+}
+
+const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    try {
+        const { data } = await Login({
+            variables: { ...formState},
+        });
+
+        Auth.Login(data.Login.token);
+    } catch (e) {
+        console.Error(e);
+    }
+
+    setFormState({
+        email: '',
+        password: '',
+    });
+}
 
     return (
 
@@ -18,12 +47,12 @@ const [action,setAction] = useState("Login");
      <div className="box-1">
     <form className="box-2">
     <div className="input">
-        <input type="Email" placeholder="Email"/>
+        <input type="Email" placeholder="Email" value={formState.email} onChange={handleChange}/>
     </div>
     </form>
     <form className="box-2">
     <div className="input">
-        <input type="Password" placeholder="Password"/>
+        <input type="Password" placeholder="Password" value={formState.password} onChange={handleChange}/>
     </div>
     </form>
     </div>
